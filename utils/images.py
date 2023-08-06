@@ -1,6 +1,6 @@
 import os
 import base64
-from typing import List, Union
+from typing import List, Union, Literal
 from PIL import Image
 import numpy as np
 from io import BytesIO
@@ -21,7 +21,9 @@ def base64_to_image(base64_string: str) -> Image.Image:
 
 
 def image_to_base64(
-    image: Union[str, Image.Image, np.ndarray], _format: str = "jpeg"
+    image: Union[str, Image.Image, np.ndarray], 
+    _format: str = "jpeg",
+    myme: bool = True,
 ) -> str:
     """Returns a base64 string from a PIL Image."""
     if isinstance(image, str):
@@ -37,6 +39,11 @@ def image_to_base64(
     image.save(buffer, format=_format)
     buffer.seek(0)
     encoded_image = base64.b64encode(buffer.getvalue()).decode("utf-8")
+
+    if myme:
+        myme_type = f"data:image/{_format};base64,"
+        encoded_image = f"{myme_type}{encoded_image}"
+
     return encoded_image
 
 

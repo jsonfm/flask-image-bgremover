@@ -37,7 +37,7 @@
                     <div class="card img-card">
                         <template x-if="!!$store.viewer.result && !$store.viewer.loading">
                                 <img
-                                    x-bind:src="$store?.viewer?.result"
+                                    :src="$store?.viewer?.result"
                                     class="img-cover"
                                 >
                         </template>

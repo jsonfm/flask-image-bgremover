@@ -14,7 +14,12 @@ def home():
 def remove_bg():
     image = request.json.get("image")
     if image is not None:
-        result = remove_bg_image(image, to_base64=True)
+        result = remove_bg_image(
+            image, 
+            to_base64=True, 
+            myme=True,
+            _format="png"
+        )
         response = {
             "result": result
         }
