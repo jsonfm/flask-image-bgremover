@@ -1,3 +1,7 @@
+<img
+    src="./docs/images/preview.png"
+/>
+
 ### 🌠 BgRemover
 
 An image background remover made with Python/Flask and HTML/JS.
