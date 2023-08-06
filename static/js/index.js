@@ -9,6 +9,7 @@ Alpine?.store('viewer', {
     fileChosen(event) {
         this.fileToDataUrl(event, src => {
             this.preview = src;
+            this.result = null;
         })
     },
     fileToDataUrl(event, callback) {
@@ -21,6 +22,7 @@ Alpine?.store('viewer', {
         reader.onload = e => callback(e.target.result)
     },
     async removeBg() {
+
         this.loading = true;
         const body = {
             "image": this.preview

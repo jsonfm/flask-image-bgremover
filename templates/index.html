@@ -13,50 +13,75 @@
     <script src="{{ url_for('static', filename='/js/index.js') }}"></script>
 </head>
 <body>
-    <section x-data>
-        <div class="container h-screen flex flex-col gap-4 items-center justify-center">
-            <div class="flex gap-4">
-                <div class="w-full">
-                    <label for="preview" class="card img-card flex flex-col">
-                        <template x-if="!!$store?.viewer?.preview">
-                            <img
-                                :src="$store.viewer.preview"
-                                class="img-cover"
-                            />
-                        </template>
-                        <template x-if="!$store?.viewer?.preview">
-                            <div class="img-cover flex flex-col items-center justify-center">
-                                <h4 class="text-center">Choose and image</h4>
-                                <i class="mt-4" data-feather="image"></i>
-                            </div>
-                        </template>
-                        <input @change="(e) => $store.viewer.fileChosen(e)" class="hidden" id="preview" name="preview" type="file" accept="image/*"/>
-                    </label>
-                </div>
-                <div class="w-full">
-                    <div class="card img-card">
-                        <template x-if="!!$store.viewer.result && !$store.viewer.loading">
+    <main class="overflow-x-hidden">
+        <header class="container">
+            <nav class="flex items-center">
+                <a href="/" class="logo"><b class="text-primary">Bg</b>Remover.</p></a>
+            </nav>
+        </header>
+        <section class="py-12" x-data>
+            <div class="container h-screen flex flex-col  gap-8 items-center justify-center">
+                <div class="flex flex-col md-flex-row gap-4">
+                    <div class="w-full">
+                        <label for="preview" class="card img-card flex flex-col">
+                            <template x-if="!!$store?.viewer?.preview">
                                 <img
-                                    :src="$store?.viewer?.result"
+                                    :src="$store.viewer.preview"
                                     class="img-cover"
-                                >
-                        </template>
-                        <template x-if="$store.viewer.loading">
-                            <i data-feather="image"></i>
-                        </template>
+                                />
+                            </template>
+                            <template x-if="!$store?.viewer?.preview">
+                                <div class="img-cover flex flex-col items-center justify-center">
+                                    <p class="text-center">Choose an image</p>
+                                    <i class="mt-4" data-feather="image"></i>
+                                </div>
+                            </template>
+                            <input @change="(e) => $store.viewer.fileChosen(e)" class="hidden" id="preview" name="preview" type="file" accept="image/*"/>
+                        </label>
+                    </div>
+                    <div class="md-hidden flex justify-center">
+                        <button 
+                            @click="$store?.viewer?.removeBg()" 
+                            class="btn btn-primary btn-lg"
+                            :disabled="!$store.viewer.preview || !!$store.viewer.loading"
+                        >
+                            Remove
+                        </button>
+                    </div>
+                    <div class="w-full">
+                        <div class="card img-card flex flex-col items-center justify-center">
+                            <template x-if="!!$store.viewer.result && !$store.viewer.loading">
+                                    <img
+                                        :src="$store?.viewer?.result"
+                                        class="img-cover"
+                                    >
+                            </template>
+                            <template x-if="!$store.viewer.preview && !$store.viewer.result && !$store.viewer.loading">
+                                <p>Choose an image, before processing.</p>
+                            </template>
+                            <template x-if="!!$store.viewer.preview && !$store.viewer.result && !$store.viewer.loading">
+                                <p class="text-primary">Press `Remove` button</p>
+                            </template>
+
+                            <template x-if="!!$store.viewer.loading">
+                                <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+                            </template>
+                
+                        </div>
                     </div>
                 </div>
+                <div class="mt-4 hidden md-flex">
+                    <button 
+                        @click="$store?.viewer?.removeBg()" 
+                        class="btn btn-primary btn-lg"
+                        :disabled="!$store.viewer.preview || !!$store.viewer.loading"
+                    >
+                        Remove
+                    </button>
+                </div>
             </div>
-            <div class="mt-4">
-                <button 
-                    @click="$store?.viewer?.removeBg()" 
-                    class="btn btn-primary btn-lg"
-                    :disabled="$store?.viewer?.loading"
-                >
-                    Remove
-                </button>
-            </div>
-        </div>
-    </section>
+        </section>
+    </main>
+
 </body>
 </html>
