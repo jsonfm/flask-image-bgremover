@@ -6,6 +6,7 @@ An image background remover made with Python/Flask and HTML/JS.
 
 -   Flask
 -   Pillow
+-   Rembg
 -   HTML/CSS/JS
 -   Alpine.js
 

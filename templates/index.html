@@ -8,21 +8,32 @@
     <script src="//unpkg.com/alpinejs" defer></script>
 </head>
 <body>
-    <section class=""  x-data="{ loading: false, preview: '' }">
+    <section class=""  x-data="{ loading: false, preview: '', result: '' }">
         <div class="container h-screen flex items-center justify-center">
             <div class="flex">
                 <div>
                     <div class="img-card">
-                        <img
-                            x-bind:src="preview"
-                        />
+                        <template x-if="preview">
+                            <img
+                                x-bind:src="preview"
+                                class="img-cover"
+                            />
+                        </template>
+                        <tempalte x-if="!preview">
+                            <div class="img-cover flex flex-col items-center justify-center">
+                                <h4 class="text-center">Choose and image</h4>
+                            </div>
+                        </tempalte>
                     </div>
                 </div>
                 <div>
                     <div class="img-card">
-                        <img
+                        <template x-if="result">
+                            <img
                             x-bind:src="preview"
+                            class="img-cover"
                         />
+                        </template>
                     </div>
                 </div>
             </div>
