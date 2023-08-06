@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BgRemover</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='/styles/index.css') }}">
+    <script src="//unpkg.com/alpinejs" defer></script>
+</head>
+<body>
+    <section class=""  x-data="{ loading: false, preview: '' }">
+        <div class="container h-screen flex items-center justify-center">
+            <div class="flex">
+                <div>
+                    <div class="img-card">
+                        <img
+                            x-bind:src="preview"
+                        />
+                    </div>
+                </div>
+                <div>
+                    <div class="img-card">
+                        <img
+                            x-bind:src="preview"
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
