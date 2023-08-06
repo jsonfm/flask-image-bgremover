@@ -4,38 +4,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BgRemover</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{{ url_for('static', filename='/styles/index.css') }}">
-    <script src="//unpkg.com/alpinejs" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js" integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.12.3/dist/cdn.min.js"></script>
+    <script src="{{ url_for('static', filename='/js/index.js') }}"></script>
 </head>
 <body>
-    <section class=""  x-data="{ loading: false, preview: '', result: '' }">
-        <div class="container h-screen flex items-center justify-center">
-            <div class="flex">
-                <div>
-                    <div class="img-card">
-                        <template x-if="preview">
+    <section x-data>
+        <div class="container h-screen flex flex-col gap-4 items-center justify-center">
+            <div class="flex gap-4">
+                <div class="w-full">
+                    <label for="preview" class="card img-card flex flex-col">
+                        <template x-if="!!$store?.viewer?.preview">
                             <img
-                                x-bind:src="preview"
+                                :src="$store.viewer.preview"
                                 class="img-cover"
                             />
                         </template>
-                        <tempalte x-if="!preview">
+                        <template x-if="!$store?.viewer?.preview">
                             <div class="img-cover flex flex-col items-center justify-center">
                                 <h4 class="text-center">Choose and image</h4>
+                                <i class="mt-4" data-feather="image"></i>
                             </div>
-                        </tempalte>
-                    </div>
+                        </template>
+                        <input @change="(e) => $store.viewer.fileChosen(e)" class="hidden" id="preview" name="preview" type="file" accept="image/*"/>
+                    </label>
                 </div>
-                <div>
-                    <div class="img-card">
-                        <template x-if="result">
-                            <img
-                            x-bind:src="preview"
-                            class="img-cover"
-                        />
+                <div class="w-full">
+                    <div class="card img-card">
+                        <template x-if="!!$store.viewer.result && !$store.viewer.loading">
+                                <img
+                                    x-bind:src="$store?.viewer?.result"
+                                    class="img-cover"
+                                >
+                        </template>
+                        <template x-if="$store.viewer.loading">
+                            <i data-feather="image"></i>
                         </template>
                     </div>
                 </div>
+            </div>
+            <div class="mt-4">
+                <button 
+                    @click="$store?.viewer?.removeBg()" 
+                    class="btn btn-primary btn-lg"
+                    :disabled="$store?.viewer?.loading"
+                >
+                    Remove
+                </button>
             </div>
         </div>
     </section>
